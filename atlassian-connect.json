@@ -1,10 +1,10 @@
 {
     "key": "hipchat-deploybot-addon",
-    "name": "Hello!",
-    "description": "My very first HipChat add-on",
+    "name": "Deploybot",
+    "description": "Hipchat add-on that integrates with a custom dockerized deploybot",
     "vendor": {
-        "name": "Charlie Awyeah",
-        "url": "https://www.hipchat.com"
+        "name": "Sam Tay",
+        "url": "https://github.com/SamTay"
     },
     "links": {
         "self": "{{localBaseUrl}}/atlassian-connect.json",
@@ -20,32 +20,30 @@
         "installable": {
             "callbackUrl": "{{localBaseUrl}}/installable"
         },
-        "configurable": {
-             "url": "{{localBaseUrl}}/config"
-        },
         "webhook": {
             "url": "{{localBaseUrl}}/webhook",
-            "pattern": "^/hello",
+            "pattern": "^/deploybot ping",
             "event": "room_message",
-            "name": "Hello!"
+            "name": "Pong!"
         },
         "glance": [
             {
                "name": {
-                   "value": "Hello!"
+                   "value": "Deploybot"
                },
                "queryUrl": "{{localBaseUrl}}/glance",
                "key": "hipchat-deploybot-addon.glance",
-               "target": "hipchat-deploybot-addon.sidebar",
+               "target": "hipchat-deploybot-addon.skel-list",
                "icon": {
                    "url": "{{localBaseUrl}}/img/logo.png",
                    "url@2x": "{{localBaseUrl}}/img/logo.png"
-               }
+               },
+               "weight": 0
             }
         ],
         "webPanel": [
             {
-                "key": "hipchat-deploybot-addon.sidebar",
+                "key": "hipchat-deploybot-addon.skel-list",
                 "name": {
                     "value": "Hello Sidebar!"
                 },
