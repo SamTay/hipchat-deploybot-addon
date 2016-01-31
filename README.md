@@ -1,9 +1,23 @@
-# Atlassian Add-on using Express
+# Hipchat Deploybot Add-on
 
-Congratulations! You've successfully created a HipChat Connect Add-on using the Express web application framework.
+This is a Hipchat Connect add-on that integrates with a custom dockerized deploybot. Built using [atlassian-connect-express-hipchat](https://bitbucket.org/atlassianlabs/atlassian-connect-express-hipchat).
 
-## What's next?
+## Installation
 
-* [Read the docs](https://bitbucket.org/atlassian/atlassian-connect-express/src/master/README.md#markdown-header-install-dependencies).
-* [Read the HipChat Connect guides](https://developer.atlassian.com/hipchat/guide)
-* [View the HipChat API reference](https://www.hipchat.com/docs/apiv2)
+This add-on is a node app that must be running on a dedicated server, and then configured from within Hipchat.
+
+#### Running the app
+
+Environment variables include
+- ``AC_LOCAL_BASE_URL``: the app host (see [ngrok](https://github.com/inconshreveable/ngrok) for local development)
+- ``NODE_ENV``: production/development (defaults to development)
+
+To start the app:
+```bash
+AC_LOCAL_BASE_URL=https://<your-add-on-host> \
+NODE_ENV=production node app.js
+```
+
+#### Hipchat configuration
+
+
