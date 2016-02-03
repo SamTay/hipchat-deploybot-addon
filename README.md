@@ -11,6 +11,8 @@ This add-on is a node app that must be running on a dedicated server, and then c
 Environment variables include
 - ``AC_LOCAL_BASE_URL``: the app host (see [ngrok](https://github.com/inconshreveable/ngrok) for local development)
 - ``NODE_ENV``: production/development (defaults to development)
+- ``DEPLOYBOT_SECRET``: credentials for deploybot
+- ``DEPLOYBOT_BASE_URL``: deploybot host URL
 
 To start the app:
 ```bash
@@ -19,5 +21,3 @@ NODE_ENV=production node app.js
 ```
 
 #### Hipchat configuration
-
-

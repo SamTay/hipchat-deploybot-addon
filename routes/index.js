@@ -1,6 +1,7 @@
 var http = require('request');
 var cors = require('cors');
 var uuid = require('uuid');
+var deploybot = require('../lib/deploybot');
 
 // This is the heart of your HipChat Connect add-on. For more information,
 // take a look at https://developer.atlassian.com/hipchat/guide
@@ -46,24 +47,26 @@ module.exports = function (app, addon) {
     }
   );
 
-  // This is an example glance that shows in the sidebar
+  // This is the glance that shows in the sidebar
   // https://developer.atlassian.com/hipchat/guide/hipchat-ui-extensions/glances
   app.get('/glance',
     cors(),
     addon.authenticate(),
     function(req, res) {
+      var skelCount = deploybot.getSkelCount();
       res.json({
         "label": {
           "type": "html",
-          "value": "Hello World!"
-        },
+          "value": "<b>" + skelCount + "</b> Skels"
+        }
+        /* For now, exclude status. Maybe later have status for latest deployment
         "status": {
           "type": "lozenge",
           "value": {
             "label": "Broken",
             "type": "error"
           }
-        }
+        } */
       });
     }
   );
