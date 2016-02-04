@@ -102,7 +102,7 @@ module.exports = function (app, addon) {
     }
   );
 
-  // This is an example sidebar controller that can be launched when clicking on the glance.
+  // This is the sidebar controller that is launched when clicking on the glance.
   // https://developer.atlassian.com/hipchat/guide/hipchat-ui-extensions/views/sidebar
   app.get('/sidebar',
     addon.authenticate(),

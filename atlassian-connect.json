@@ -45,7 +45,7 @@
             {
                 "key": "hipchat-deploybot-addon.skel-list",
                 "name": {
-                    "value": "Hello Sidebar!"
+                    "value": "Skel List"
                 },
                 "location": "hipchat.sidebar.right",
                 "url": "{{localBaseUrl}}/sidebar"
