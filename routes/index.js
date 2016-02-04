@@ -3,8 +3,6 @@ var cors = require('cors');
 var uuid = require('uuid');
 var deploybot = require('../lib/deploybot');
 
-// This is the heart of your HipChat Connect add-on. For more information,
-// take a look at https://developer.atlassian.com/hipchat/guide
 module.exports = function (app, addon) {
   var hipchat = require('../lib/hipchat')(addon);
 
@@ -53,20 +51,29 @@ module.exports = function (app, addon) {
     cors(),
     addon.authenticate(),
     function(req, res) {
-      var skelCount = deploybot.getSkelCount();
-      res.json({
-        "label": {
-          "type": "html",
-          "value": "<b>" + skelCount + "</b> Skels"
-        }
-        /* For now, exclude status. Maybe later have status for latest deployment
-        "status": {
-          "type": "lozenge",
-          "value": {
-            "label": "Broken",
-            "type": "error"
+      deploybot.getSkelCount(function errorHandler(err) {
+        console.log(err);
+        res.json({
+          "label": {
+            "type": "html",
+            "value": "<b>No Connection</b>"
+          },
+          "status": {
+            "type": "lozenge",
+            "value": {
+              "label": "Broken",
+              "type": "error"
+            }
           }
-        } */
+        });
+      },
+      function success(skelCount) {
+        res.json({
+          "label": {
+            "type": "html",
+            "value": "<b>" + skelCount + "</b> Skels"
+          }
+        });
       });
     }
   );
