@@ -51,29 +51,29 @@ module.exports = function (app, addon) {
     cors(),
     addon.authenticate(),
     function(req, res) {
-      deploybot.getSkelCount(function errorHandler(err) {
-        console.log(err);
-        res.json({
-          "label": {
-            "type": "html",
-            "value": "<b>No Connection</b>"
-          },
-          "status": {
-            "type": "lozenge",
-            "value": {
-              "label": "Broken",
-              "type": "error"
+      deploybot.getSkelCount(function(err, skelCount) {
+        if (err) {
+          res.json({
+            "label": {
+              "type": "html",
+              "value": "<b>No Connection</b>"
+            },
+            "status": {
+              "type": "lozenge",
+              "value": {
+                "label": "Broken",
+                "type": "error"
+              }
             }
-          }
-        });
-      },
-      function success(skelCount) {
-        res.json({
-          "label": {
-            "type": "html",
-            "value": "<b>" + skelCount + "</b> Skels"
-          }
-        });
+          });
+        } else {
+          res.json({
+            "label": {
+              "type": "html",
+              "value": "<b>" + skelCount + "</b> Skels"
+            }
+          });
+        }
       });
     }
   );
