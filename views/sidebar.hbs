@@ -2,23 +2,20 @@
 <div class="aui-group sidebar">
     <div class="aui-row">
         <div class="aui-item">
-            <h3>Skel List</h3>
-            <ul>
-            <li>Group ID: {{identity.groupId}}</li>
-            <li>
-                Room ID: {{identity.roomId}}
-                <small>
-                    <a href="#" id="room">room details</a> |
-                    <a href="#" id="participants">participants</a>
-                </small>
-            </li>
-            <li>
-                User ID: {{identity.userId}}
-                <small>
-                    <a href="#" id="user">user details</a>
-                </small>
-            </li>
-            </ul>
+          <h3>Skel List</h3>
+          {{#each skels}}
+            <div class="skel-container">
+              <span class="skel-title">{{@key}}</span>
+              <div class="skel-details hidden">
+                <form id="{{@key}}-deployment" class="deployment-form" method="get">
+                {{#each this}}
+                    <input id="{{@../key}}-{{this}}" type="radio" name="env" value="{{this}}" />
+                    <label for="{{@../key}}-{{this}}">{{this}}<br>
+                {{/each}}
+                </form>
+              </div>
+            </div>
+          {{/each}}
         </div>
     </div>
     <br>
@@ -36,6 +33,13 @@
     </div>
 </div>
 <script>
+
+$('.skel-title').on('click', function() {
+  var $target = $(this).next('.skel-details');
+  $target.toggle();
+  $('.skel-details').not($target).hide();
+});
+
 $('#say_hello').on('click', function(){
     $.ajax({
         type: 'POST',

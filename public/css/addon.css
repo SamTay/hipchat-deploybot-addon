@@ -21,3 +21,10 @@ body {
 .sidebar {
   margin:10px;
 }
+.skel-container {
+  padding: 10px 0px 10px 20px;
+}
+.skel-container .skel-title {
+  font-size: 15px;
+  line-height: 20px;
+}
