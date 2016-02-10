@@ -113,7 +113,6 @@ module.exports = function (app, addon) {
           console.log(err);
         } else {
           res.render('sidebar', {skels: skels});
-          console.log(skels);
         }
       });
     }
