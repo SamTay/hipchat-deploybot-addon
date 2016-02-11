@@ -40,11 +40,11 @@
 $('.skel-title').on('click', function() {
     var $target = $(this).next('.skel-details');
     var $parentTarg = $target.parent();
-    $target.toggle();
+    $target.slideToggle('fast');
 
     $parentTarg.toggleClass('active');
     $('.active').not($parentTarg).removeClass('active');
-    $('.skel-details').not($target).hide();
+    $('.skel-details').not($target).slideUp('fast');
 });
 
 $('#say_hello').on('click', function(){
