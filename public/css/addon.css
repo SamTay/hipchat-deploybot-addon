@@ -83,3 +83,10 @@ h3 {
 
 .deploy-button {
   color: #018C01; }
+
+.active {
+  background-color: #F5F5F5; }
+  .active.skel-container .skel-title {
+    font-size: 18px; }
+
+/*# sourceMappingURL=addon.css.map */
