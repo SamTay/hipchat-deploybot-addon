@@ -48,6 +48,8 @@ h3 {
   padding: 0 0 4px 30px; }
   .deployment-form .environment-wrapper {
     margin-bottom: 5px; }
+  .deployment-form label {
+    margin-left: 8px; }
 
 .button-wrapper {
   text-align: center; }
