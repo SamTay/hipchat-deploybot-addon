@@ -9,8 +9,11 @@
               <div class="skel-details hidden">
                 <form id="{{@key}}-deployment" class="deployment-form" method="get">
                 {{#each this}}
-                    <input id="{{@../key}}-{{this}}" type="radio" name="env" value="{{this}}" />
-                    <label for="{{@../key}}-{{this}}">{{this}}<br>
+                    <div id="{{@../key}}-{{this}}" class="environment-wrapper">
+                    <button class="icon-button deploy-button"><i class="fa fa-level-up"></i></button>
+                    <button class="icon-button history-button"><i class="fa fa-history"></i></button>
+                    <label for="{{@../key}}-{{this}}">{{this}}
+                    </div>
                 {{/each}}
                 </form>
               </div>
@@ -27,7 +30,7 @@
     </div>
     <br>
     <div class="aui-row">
-        <div class="aui-item">
+        <div class="aui-item button-wrapper">
             <button id="say_hello" class="aui-button">Say Hello!</button>
         </div>
     </div>
@@ -35,9 +38,13 @@
 <script>
 
 $('.skel-title').on('click', function() {
-  var $target = $(this).next('.skel-details');
-  $target.toggle();
-  $('.skel-details').not($target).hide();
+    var $target = $(this).next('.skel-details');
+    var $parentTarg = $target.parent();
+    $target.slideToggle('fast');
+
+    $parentTarg.toggleClass('active');
+    $('.active').not($parentTarg).removeClass('active');
+    $('.skel-details').not($target).slideUp('fast');
 });
 
 $('#say_hello').on('click', function(){

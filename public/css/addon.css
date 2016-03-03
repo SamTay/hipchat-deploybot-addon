@@ -1,30 +1,94 @@
 /* add-on styles */
 .intro-header h1 {
-  font-size: 48px;
+  font-size: 65px;
   line-height: 60px;
-  padding-top: 20px;
-}
+  padding-top: 20px; }
+
 .intro-header p.subtitle {
   font-size: 24px;
   line-height: 30px;
-  padding-bottom: 20px;
-}
+  padding-bottom: 20px; }
+
 .main-panel .aui-page-panel-item {
   padding: 20px 40px 20px 0;
-  height: 100px;
-}
+  height: 100px; }
 
 body {
-  height:100%;
-  background-color: white;
-}
+  height: 100%;
+  background-color: white; }
+
+h3 {
+  font-size: 20px;
+  margin: 0 0 0 10px;
+  padding-top: 10px; }
+
 .sidebar {
-  margin:10px;
-}
-.skel-container {
-  padding: 10px 0px 10px 20px;
-}
+  margin: 10px 0; }
+
 .skel-container .skel-title {
   font-size: 15px;
-  line-height: 20px;
-}
+  padding-left: 20px;
+  line-height: 35px;
+  font-family: "Helvetica Neue", sans-serif;
+  color: #383838;
+  width: 100%;
+  display: block;
+  -webkit-transition: all .1s ease-in;
+  -moz-transition: all .1s ease-in;
+  -ms-transition: all .1s ease-in;
+  -o-transition: all .1s ease-in;
+  transition: all .1s ease-in; }
+  .skel-container .skel-title:hover {
+    background-color: #F5F5F5;
+    cursor: pointer;
+    font-size: 18px;
+    color: #000000; }
+
+.deployment-form {
+  padding: 0 0 4px 30px; }
+  .deployment-form .environment-wrapper {
+    margin-bottom: 5px; }
+  .deployment-form label {
+    margin-left: 8px; }
+
+.button-wrapper {
+  text-align: center; }
+
+#say_hello {
+  background: white;
+  border-radius: 0;
+  color: #205081;
+  border: 2px #205081 solid;
+  height: 30px;
+  line-height: 27px;
+  padding: 0 20px;
+  -webkit-transition: all .1s ease-in;
+  -moz-transition: all .1s ease-in;
+  -ms-transition: all .1s ease-in;
+  -o-transition: all .1s ease-in;
+  transition: all .1s ease-in; }
+  #say_hello:hover {
+    color: white;
+    background-color: #205081; }
+
+.icon-button {
+  background: none;
+  border: none;
+  padding: 0 2px;
+  font-size: 20px; }
+  .icon-button:hover {
+    cursor: pointer;
+    color: #205081; }
+
+.history-button {
+  color: #F37839; }
+
+.deploy-button {
+  color: #018C01; }
+
+.active, .skel-details {
+  background-color: #F5F5F5; }
+  .active.skel-container .skel-title, .skel-details.skel-container .skel-title {
+    font-size: 18px; }
+
+/*# sourceMappingURL=addon.css.map */
