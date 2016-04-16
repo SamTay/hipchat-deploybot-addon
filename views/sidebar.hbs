@@ -7,15 +7,13 @@
       <div class="skel-container">
         <span class="skel-title">{{@key}}</span>
         <div class="skel-details hidden">
-          <form id="{{@key}}-deployment" class="deployment-form" method="get">
-            {{#each this}}
-            <div id="{{@../key}}-{{this}}" class="environment-wrapper">
-              <button class="icon-button deploy-button"><i class="fa fa-level-up"></i></button>
-              <button class="icon-button history-button"><i class="fa fa-history"></i></button>
-              <label for="{{@../key}}-{{this}}">{{this}}</label>
-            </div>
-            {{/each}}
-          </form>
+          {{#each this}}
+          <div id="{{@../key}}-{{this}}" class="environment-wrapper">
+            <span class="environment">{{this}}</span>
+            <button class="icon-button deploy-button"><i class="fa fa-level-up"></i></button>
+            <button class="icon-button history-button"><i class="fa fa-history"></i></button>
+          </div>
+          {{/each}}
         </div>
       </div>
       {{/each}}
