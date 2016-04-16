@@ -1,6 +1,6 @@
 {
   "development": {
-     "localBaseUrl": "https://18cb1e34.ngrok.io",
+     "localBaseUrl": "http://975805e9.ngrok.io",
      "usePublicKey": false,
      "watch": false,
      "port": 3000,
