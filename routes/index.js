@@ -109,7 +109,7 @@ module.exports = function (app, addon) {
     function(req, res) {
       deploybot.getSkelsWithEnvs(function(err, skels) {
         if (err) {
-          // render an error template
+          res.render('error', {error: err});
           console.log(err);
         } else {
           res.render('sidebar', {skels: skels});
