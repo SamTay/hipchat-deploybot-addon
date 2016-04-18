@@ -1,6 +1,8 @@
 var http = require('request');
 var cors = require('cors');
 var uuid = require('uuid');
+var util = require('util');
+var _ = require("lodash");
 var deploybot = require('../lib/deploybot');
 var helper = require('../lib/helper');
 
@@ -118,6 +120,46 @@ module.exports = function (app, addon) {
           res.render('sidebar', {skels: skels});
         }
       });
+    }
+  );
+
+  app.post('/deploy/:skel/:env',
+    addon.authenticate(),
+    function(req, res) {
+      var skel = req.param('skel'),
+          env = req.param('env');
+      deploybot.startDeployment(skel, env, function(err, data) {
+        var card, opts, msg, url, color, title;
+        title = util.format('%s -- %s Deployment', skel, env);
+        card = {
+          id: uuid.v4(),
+          title: skel + ' -- ' + env + ' Deployment',
+          icon: {
+            url: "https://technologyconversations.files.wordpress.com/2015/12/docker-jenkins.png?w=300&h=214"
+          }
+        };
+        if (err) {
+          helper.error(err);
+          color = 'red';
+          _.extend(card, {
+            description: util.format('Sorry, something went wrong. Error message: %s', err),
+            style: 'media'
+          });
+        } else {
+          helper.debug(data);
+          color = 'green';
+          url = util.format('%s/log/%s', deploybot.getBaseUrl(), data.deployment_id.slice(0, 8));
+          _.extend(card, {
+            style: link,
+            url: url,
+            description: data.message || 'Click the link to see the deployment status.',
+          });
+        }
+        msg = '<b>' + card.title + '</b>: ' + card.description;
+        opts = {'options': {'color': color}};
+        hipchat.sendMessage(req.clientInfo, req.identity.roomId, msg, opts, card);
+      });
+      res.json({status: "ok"});
     }
   );
 

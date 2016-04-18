@@ -10,8 +10,12 @@
           {{#each this}}
           <div id="{{@../key}}-{{this}}" class="environment-wrapper">
             <span class="environment">{{this}}</span>
-            <button class="icon-button deploy-button"><i class="fa fa-level-up"></i></button>
-            <button class="icon-button history-button"><i class="fa fa-history"></i></button>
+            <button class="icon-button deploy-button" data-skel="{{@../key}}" data-env="{{this}}">
+              <i class="fa fa-level-up"></i>
+            </button>
+            <button class="icon-button history-button" data-skel="{{@../key}}" data-env="{{this}}">
+              <i class="fa fa-history"></i>
+            </button>
           </div>
           {{/each}}
         </div>
@@ -29,15 +33,17 @@
     $parentTarg.toggleClass('active');
     $('.active').not($parentTarg).removeClass('active');
     $('.skel-details').not($target).slideUp('fast');
-});
+  });
 
-  $('#say_hello').on('click', function(){
+  // TODO: deploy-button should instead pop open dialog for extra parameters
+  $('.deploy-button').on('click', function() {
+    var skel = $(this).data('skel'),
+        env = $(this).data('env'),
+        url = '/deploy/' + skel + '/' + env;
     $.ajax({
       type: 'POST',
-      url: '/send_notification',
-      headers: { 'Authorization': 'JWT {{signed_request}}' },
-      dataType: 'json',
-      data: {}
+      url: url,
+      headers: { 'Authorization': 'JWT {{signed_request}}' }
     });
   });
 
