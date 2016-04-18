@@ -2,6 +2,7 @@ var http = require('request');
 var cors = require('cors');
 var uuid = require('uuid');
 var deploybot = require('../lib/deploybot');
+var helper = require('../lib/helper');
 
 module.exports = function (app, addon) {
   var hipchat = require('../lib/hipchat')(addon);
@@ -111,8 +112,8 @@ module.exports = function (app, addon) {
     function(req, res) {
       deploybot.getSkelsWithEnvs(function(err, skels) {
         if (err) {
+          helper.error(err);
           res.render('error', {error: err});
-          console.log(err);
         } else {
           res.render('sidebar', {skels: skels});
         }
