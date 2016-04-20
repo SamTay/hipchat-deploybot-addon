@@ -2,6 +2,7 @@
 <div class="aui-group sidebar">
   <div class="aui-row">
     <div class="aui-item">
+        <img class="logo" src="img/balogohorizontal.png" alt="">
       <h3>Skel List</h3>
       {{#each skels}}
       <div class="skel-container">
@@ -10,12 +11,14 @@
           {{#each this}}
           <div id="{{@../key}}-{{this}}" class="environment-wrapper">
             <span class="environment">{{this}}</span>
-            <button class="icon-button deploy-button" data-skel="{{@../key}}" data-env="{{this}}">
-              <i class="fa fa-level-up"></i>
+              <div class="button-container">
+            <button class="btn deploy-button" data-skel="{{@../key}}" data-env="{{this}}">
+              Deploy
             </button>
-            <button class="icon-button history-button" data-skel="{{@../key}}" data-env="{{this}}">
-              <i class="fa fa-history"></i>
+            <button class="btn history-button" data-skel="{{@../key}}" data-env="{{this}}">
+              History
             </button>
+              </div>
           </div>
           {{/each}}
         </div>
@@ -33,6 +36,14 @@
     $parentTarg.toggleClass('active');
     $('.active').not($parentTarg).removeClass('active');
     $('.skel-details').not($target).slideUp('fast');
+  });
+
+  $('.btn').on('mouseover focus', function(){
+      $(this).parent().siblings('.environment').addClass('active');
+  });
+
+  $('.btn').on('mouseleave focusout', function(){
+      $(this).parent().siblings('.environment').removeClass('active');
   });
 
   // TODO: deploy-button should instead pop open dialog for extra parameters
