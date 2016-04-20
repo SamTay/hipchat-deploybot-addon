@@ -17,6 +17,8 @@ Environment variables include
 To start the app:
 ```bash
 AC_LOCAL_BASE_URL=https://<your-add-on-host> \
+DEPLOYBOT_SECRET=************** \
+DEPLOYBOT_BASE_URL=http://deploybot.badevops.com/ \
 NODE_ENV=production node app.js
 ```
 
