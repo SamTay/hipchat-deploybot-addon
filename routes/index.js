@@ -221,4 +221,16 @@ module.exports = function (app, addon) {
     });
   });
 
+  // Allow authenticated requests to kill the app
+  // Used for octohook reincarnation
+  app.post('/kill',
+    addon.authenticate(),
+    function(req, res) {
+      hipchat.sendMessage(req.clientInfo, req.context.item.room.id, 'Deploybot is reincarnating...')
+        .then(function(data) {
+          res.sendStatus(200);
+          process.exit();
+        });
+    }
+  );
 };

@@ -20,12 +20,20 @@
         "installable": {
             "callbackUrl": "{{localBaseUrl}}/installable"
         },
-        "webhook": {
+        "webhook": [
+          {
             "url": "{{localBaseUrl}}/webhook",
             "pattern": "^/deploybot ping",
             "event": "room_message",
             "name": "Pong!"
-        },
+          },
+          {
+            "url": "{{localBaseUrl}}/kill",
+            "pattern": "^/deploybot reincarnate",
+            "event": "room_message",
+            "name": "Reincarnation"
+          }
+        ],
         "glance": [
             {
                "name": {
