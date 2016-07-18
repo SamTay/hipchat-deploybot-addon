@@ -228,40 +228,46 @@ module.exports = function (app, addon) {
           options = qs.parse(match[3], {plainObjects:true, delimiter: /\s+/});
           helper.debug('deployment options: ', options);
         }
+        helper.debug(util.format('Deploying %s to %s from webhook message', skel, env));
         handleDeployment(skel, env, options, req, res);
       } else {
-        hipchat.sendMessage(req.clientInfo, req.context.item.room.id, "I didn't understand that");
+        var errorMsg = "I didn't understand that.<br>"
+          + "The start deployment syntax is '/deploybot start CLIENT ENV [options]'<br>"
+          + "For example: /deploybot start RDS qa-1 ref=unstable/Release_C";
+        hipchat.sendMessage(req.clientInfo, req.context.item.room.id, errorMsg);
         res.json({status: "ok"});
       }
     }
   );
-};
 
-function handleDeployment(skel, env, options, req, res) {
-  deploybot.startDeployment(skel, env, options, function(err, data) {
-    var card, opts, msg, url, color;
-    if (err) {
-      helper.error(err);
-      color = 'red';
-      msg = util.format('Sorry, something went wrong. Error message: %s', err);
-    } else {
-      helper.debug(data);
-      color = 'green';
-      url = util.format('%s/log/%s', deploybot.getBaseUrl(), data.deployment_id.slice(0, 8));
-      card = {
-        title: util.format('%s -- %s Deployment', skel, env),
-        description: data.message || 'Click the link to see the deployment status.',
-        style: 'link',
-        url: url,
-        id: uuid.v4(),
-        icon: {
-          url: "https://technologyconversations.files.wordpress.com/2015/12/docker-jenkins.png?w=300&h=214"
-        }
-      };
-      msg = util.format('<a href="%s"><b>%s</b></a>: %s', url, card.title, card.description);
-    }
-    opts = {'options': {'color': color}};
-    hipchat.sendMessage(req.clientInfo, req.identity.roomId, msg, opts, card);
-    res.json({status: "ok"});
-  });
-}
+  function handleDeployment(skel, env, options, req, res) {
+    deploybot.startDeployment(skel, env, options, function(err, data) {
+      var card, opts, msg, url, color;
+      if (err) {
+        helper.error(err);
+        color = 'red';
+        msg = util.format('Sorry, something went wrong. Error message: %s', err);
+      } else {
+        helper.debug(data);
+        color = 'green';
+        url = util.format('%s/log/%s', deploybot.getBaseUrl(), data.deployment_id.slice(0, 8));
+        card = {
+          title: util.format('%s -- %s Deployment', skel, env),
+          description: data.message || 'Click the link to see the deployment status.',
+          style: 'link',
+          url: url,
+          id: uuid.v4(),
+          icon: {
+            url: "https://technologyconversations.files.wordpress.com/2015/12/docker-jenkins.png?w=300&h=214"
+          }
+        };
+        msg = util.format('<a href="%s"><b>%s</b></a>: %s', url, card.title, card.description);
+      }
+      opts = {'options': {'color': color}};
+      hipchat.sendMessage(req.clientInfo, req.context.item.room.id, msg, opts, card)
+        .then(function(data) {
+          res.json({status: "ok"});
+        });
+    });
+  }
+};
