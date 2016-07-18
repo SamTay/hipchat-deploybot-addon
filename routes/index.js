@@ -2,7 +2,8 @@ var http = require('request');
 var cors = require('cors');
 var uuid = require('uuid');
 var util = require('util');
-var _ = require("lodash");
+var _ = require('lodash');
+var qs = require('qs');
 var deploybot = require('../lib/deploybot');
 var helper = require('../lib/helper');
 
@@ -128,8 +129,8 @@ module.exports = function (app, addon) {
     function(req, res) {
       var skel = req.param('skel'),
           env = req.param('env'),
-          ref = req.param('ref') || null;
-      handleDeployment(skel, env, ref, req, res);
+          options = req.query;
+      handleDeployment(skel, env, options, req, res);
     }
   );
 
@@ -212,17 +213,23 @@ module.exports = function (app, addon) {
 
   // Start deployment from message
   // Used for octohook autodeployments
+  // Example: /deploybot start RDS qa-1 ref=develop otherOption=otherValue
   app.post('/start-from-message',
     addon.authenticate(),
     function(req, res) {
+      helper.debug(util.format('Deploying %s to %s from webhook message', skel, env));
+      var skel, env, options = {};
       var message = req.body.item.message.message;
       var pattern = /start\s+([\w\-]+)\s+([\w\-]+)\s*(.*)/i; // TODO check current hubot pattern
       var match = message.match(pattern);
       if (match) {
-        var skel = match[1],
-            env = match[2],
-            ref = match[3] || null;
-        handleDeployment(skel, env, ref, req, res);
+        skel = match[1];
+        env = match[2];
+        if (match[3]) {
+          options = qs.parse(match[3], {plainObjects:true, delimiter: /\s+/});
+          helper.debug('deployment options: ', options);
+        }
+        handleDeployment(skel, env, options, req, res);
       } else {
         hipchat.sendMessage(req.clientInfo, req.context.item.room.id, "I didn't understand that");
         res.json({status: "ok"});
@@ -231,8 +238,8 @@ module.exports = function (app, addon) {
   );
 };
 
-function handleDeployment(skel, env, ref, req, res) {
-  deploybot.startDeployment(skel, env, ref, function(err, data) {
+function handleDeployment(skel, env, options, req, res) {
+  deploybot.startDeployment(skel, env, options, function(err, data) {
     var card, opts, msg, url, color;
     if (err) {
       helper.error(err);
