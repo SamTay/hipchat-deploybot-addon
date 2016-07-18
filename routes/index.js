@@ -217,7 +217,6 @@ module.exports = function (app, addon) {
   app.post('/start-from-message',
     addon.authenticate(),
     function(req, res) {
-      helper.debug(util.format('Deploying %s to %s from webhook message', skel, env));
       var skel, env, options = {};
       var message = req.body.item.message.message;
       var pattern = /start\s+([\w\-]+)\s+([\w\-]+)\s*(.*)/i; // TODO check current hubot pattern
