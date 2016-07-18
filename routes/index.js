@@ -130,7 +130,7 @@ module.exports = function (app, addon) {
       var skel = req.param('skel'),
           env = req.param('env'),
           options = req.query;
-      handleDeployment(skel, env, options, req, res);
+      handleDeployment(skel, env, options, req.identity.roomId, req, res);
     }
   );
 
@@ -229,7 +229,7 @@ module.exports = function (app, addon) {
           helper.debug('deployment options: ', options);
         }
         helper.debug(util.format('Deploying %s to %s from webhook message', skel, env));
-        handleDeployment(skel, env, options, req, res);
+        handleDeployment(skel, env, options, req.context.item.room.id, req, res);
       } else {
         var errorMsg = "I didn't understand that.<br>"
           + "The start deployment syntax is '/deploybot start CLIENT ENV [options]'<br>"
@@ -240,7 +240,7 @@ module.exports = function (app, addon) {
     }
   );
 
-  function handleDeployment(skel, env, options, req, res) {
+  function handleDeployment(skel, env, options, roomId, req, res) {
     deploybot.startDeployment(skel, env, options, function(err, data) {
       var card, opts, msg, url, color;
       if (err) {
@@ -264,7 +264,7 @@ module.exports = function (app, addon) {
         msg = util.format('<a href="%s"><b>%s</b></a>: %s', url, card.title, card.description);
       }
       opts = {'options': {'color': color}};
-      hipchat.sendMessage(req.clientInfo, req.context.item.room.id, msg, opts, card)
+      hipchat.sendMessage(req.clientInfo, roomId, msg, opts, card)
         .then(function(data) {
           res.json({status: "ok"});
         });
