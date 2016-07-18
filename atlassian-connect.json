@@ -32,6 +32,12 @@
             "pattern": "^/deploybot reincarnate",
             "event": "room_message",
             "name": "Reincarnation"
+          },
+          {
+            "url": "{{localBaseUrl}}/start-from-message",
+            "pattern": "^/deploybot start",
+            "event": "room_message",
+            "name": "Start Deployment"
           }
         ],
         "glance": [
