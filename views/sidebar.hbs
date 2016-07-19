@@ -6,16 +6,16 @@
       <h3>Skel List</h3>
       {{#each skels}}
       <div class="skel-container">
-        <span class="skel-title">{{@key}}</span>
+        <span class="skel-title">{{skel}}</span>
         <div class="skel-details hidden">
-          {{#each this}}
-          <div id="{{@../key}}-{{this}}" class="environment-wrapper">
+          {{#each envs}}
+          <div id="{{../skel}}-{{this}}" class="environment-wrapper">
             <span class="environment">{{this}}</span>
               <div class="button-container">
-            <button class="btn deploy-button" data-skel="{{@../key}}" data-env="{{this}}">
+            <button class="btn deploy-button" data-skel="{{../skel}}" data-env="{{this}}">
               Deploy
             </button>
-            <button class="btn history-button" data-skel="{{@../key}}" data-env="{{this}}">
+            <button class="btn history-button" data-skel="{{../skel}}" data-env="{{this}}">
               History
             </button>
               </div>
