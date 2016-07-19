@@ -55,7 +55,7 @@ img.logo {
   display: block;
   margin: 3px 5px 3px 0px; }
 
-.btn {
+.btn, .aui-button {
   font-size: 10px;
   border: none;
   border-radius: 2px;
@@ -67,7 +67,7 @@ img.logo {
   width: 60px;
   height: 25px;
   margin-bottom: 5px; }
-  .btn:hover {
+  .btn:hover, .aui-button:hover {
     cursor: pointer;
     box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15); }
 
@@ -97,5 +97,36 @@ img.logo {
   transition: all .2s ease; }
   .skel-details span.environment.active {
     color: #0077c6; }
+
+/* modal */
+.deploy-modal {
+  padding: 40px 20px 20px 20px;
+  text-align: center; }
+
+#info-callout {
+  color: white; }
+  #info-callout span {
+    display: inline-block;
+    font-size: 20px; }
+    #info-callout span.skel-name {
+      margin-top: 20px; }
+
+#deploy-form {
+  margin-top: 20px; }
+  #deploy-form input {
+    background: #0077c6;
+    color: white;
+    border: none;
+    border-bottom: 2px white solid; }
+    #deploy-form input::-webkit-input-placeholder {
+      color: white; }
+    #deploy-form input:-moz-placeholder {
+      color: white; }
+    #deploy-form input::-moz-placeholder {
+      color: white; }
+    #deploy-form input:-ms-input-placeholder {
+      color: white; }
+    #deploy-form input:focus {
+      outline: none; }
 
 /*# sourceMappingURL=addon.css.map */

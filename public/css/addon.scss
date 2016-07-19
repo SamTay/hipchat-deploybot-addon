@@ -71,7 +71,7 @@ img.logo {
   margin: 3px 5px 3px 0px;
 }
 
-.btn {
+.btn, .aui-button {
   font-size: 10px;
   border: none;
   border-radius: 2px;
@@ -123,3 +123,40 @@ img.logo {
     color: $bablue;
   }
 }
+
+/* modal */
+.deploy-modal {
+  padding: 40px 20px 20px 20px;
+  text-align: center;
+}
+
+#info-callout {
+  color: white;
+
+  span {
+    display: inline-block;
+    font-size: 20px;
+    &.skel-name {
+      margin-top: 20px;
+    }
+  }
+}
+
+#deploy-form {
+  margin-top: 20px;
+
+  input {
+    background: $bablue;
+    color: white;
+    border: none;
+    border-bottom: 2px white solid;
+    &::-webkit-input-placeholder {  color: white;  }
+    &:-moz-placeholder { color: white;  }
+    &::-moz-placeholder { color: white; }
+    &:-ms-input-placeholder {  color: white;  }
+    &:focus {
+      outline: none;
+    }
+  }
+}
+

@@ -11,8 +11,8 @@
 AP.register({
   "receive-parameters": function(parameters) {
     $('#deploy-form').attr("action", parameters.deploy_url);
-    $('#info-callout').html("You are deploying"
-      + " " + parameters.skel + " to " + parameters.env
+    $('#info-callout').html("You are deploying:" + "<br>"
+      + " <span class='skel-name'>" + parameters.skel + "</span>"+ " to " + "<span class='env-name'>" + parameters.env + "</span>"
     );
     // Enable primary action to start deployment
     AP.require("dialog", function(dialog) {
