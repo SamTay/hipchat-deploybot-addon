@@ -79,24 +79,31 @@
         ],
         "dialog": [
             {
-                "key": "hipchat-deploybot-addon.dialog",
+                "key": "hipchat-deploybot-addon.deploy-dialog",
                 "title": {
-                    "value": "Hello Dialog!"
+                    "value": "Deployment Options"
                 },
                 "url": "{{localBaseUrl}}/dialog",
                 "options": {
-                  "style": "normal",
-                  "primaryAction": {
-                    "name": {
-                      "value": "Say Hello!"
-                    },
-                    "key": "hipchat-deploybot-addon.save",
-                    "enabled": true
-                  },
                   "size": {
                     "width": "400px",
                     "height": "200px"
-                  }
+                  },
+                  "style": "normal",
+                  "primaryAction": {
+                    "name": {
+                      "value": "Deploy"
+                    },
+                    "key": "hipchat-deploybot-addon.start",
+                    "enabled": true
+                  },
+                  "secondaryActions": [{
+                    "name": {
+                      "value": "Cancel"
+                    },
+                    "key": "hipchat-deploybot-addon.cancel",
+                    "enabled": true
+                  }]
                 }
             }
         ],
