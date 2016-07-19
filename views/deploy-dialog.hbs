@@ -26,6 +26,7 @@ AP.register({
 });
 AP.register({
   "dialog-button-click": function(event, closeDialog) {
+    // Handle deploy
     if (event.action === "hipchat-deploybot-addon.start") {
       var url = $("#deploy-form").attr("action");
       if ($("#ref-input").val()) {
@@ -39,6 +40,10 @@ AP.register({
       }).done(function() {
         closeDialog(true);
       });
+    }
+    // Handle cancel
+    if (event.action === "hipchat-deploybot-addon.cancel") {
+      closeDialog(true);
     }
   }
 });
