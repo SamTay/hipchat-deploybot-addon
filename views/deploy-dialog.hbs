@@ -1,0 +1,45 @@
+{{!< layout}}
+<div class="aui-group">
+    <div class="aui-item">
+      <span id="info-callout" class="info"></span>
+      <form id="deploy-form" method="post" action="/deploy">
+        <input id="ref-input" type="text" name="ref" placeholder="Optional ref" />
+      </form>
+    </div>
+</div>
+<script>
+// This function will receive the parameters that were used in dialog.open(...)
+// Once parameters are received, primary action is enabled
+AP.register({
+  "receive-parameters": function(parameters) {
+    $('#deploy-form').attr("action", parameters.deploy_url);
+    $('#info-callout').html("You are deploying"
+      + " " + parameters.skel + " to " + parameters.env
+    );
+    // Enable primary action to start deployment
+    AP.require("dialog", function(dialog) {
+      dialog.updatePrimaryAction({
+        enabled: true
+      });
+    });
+  }
+});
+AP.register({
+  "dialog-button-click": function(event, closeDialog) {
+    if (event.action === "hipchat-deploybot-addon.start") {
+      var url = $("#deploy-form").attr("action");
+      if ($("#ref-input").val()) {
+        url += "?" + $("#deploy-form").serialize();
+      }
+      // TODO ajax spinner while ajax posting
+      $.ajax({
+        type: 'POST',
+        url: url,
+        headers: { 'Authorization': 'JWT {{signed_request}}' }
+      }).done(function() {
+        closeDialog(true);
+      });
+    }
+  }
+});
+</script>

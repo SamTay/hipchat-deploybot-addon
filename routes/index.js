@@ -136,10 +136,10 @@ module.exports = function (app, addon) {
 
   // This is an example dialog controller that can be launched when clicking on the glance.
   // https://developer.atlassian.com/hipchat/guide/hipchat-ui-extensions/views/dialog
-  app.get('/dialog',
+  app.get('/deploy-dialog',
     addon.authenticate(),
     function(req, res) {
-      res.render('dialog', {
+      res.render('deploy-dialog', {
         identity: req.identity
       });
     }

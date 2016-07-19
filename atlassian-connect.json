@@ -83,7 +83,7 @@
                 "title": {
                     "value": "Deployment Options"
                 },
-                "url": "{{localBaseUrl}}/dialog",
+                "url": "{{localBaseUrl}}/deploy-dialog",
                 "options": {
                   "size": {
                     "width": "400px",
@@ -95,7 +95,7 @@
                       "value": "Deploy"
                     },
                     "key": "hipchat-deploybot-addon.start",
-                    "enabled": true
+                    "enabled": false
                   },
                   "secondaryActions": [{
                     "name": {

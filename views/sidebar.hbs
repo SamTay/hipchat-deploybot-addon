@@ -46,50 +46,20 @@
       $(this).parent().siblings('.environment').removeClass('active');
   });
 
-  // TODO: deploy-button should instead pop open dialog for extra parameters
   $('.deploy-button').on('click', function() {
     var skel = $(this).data('skel'),
         env = $(this).data('env'),
-        url = '/deploy/' + skel + '/' + env;
-    $.ajax({
-      type: 'POST',
-      url: url,
-      headers: { 'Authorization': 'JWT {{signed_request}}' }
-    });
-  });
-
-  // The following are client-side APIs you can call to get information about
-  // the room or user. For more information, go to:
-  // https://developer.atlassian.com/hipchat/guide/hipchat-ui-extensions/views/javascript-api#JavascriptAPI-GettingcontextualinformationfromtheHipChatClient
-
-  $('#room').on('click', function(){
-    AP.require('room', function(room){
-      room.getRoomDetails(function(err, data){
-        if (!err) {
-          $('#details-title').html('Room details');
-          $('#details').html(JSON.stringify(data, null, 2));
-        }
-      });
-    });
-  });
-
-  $('#participants').on('click', function(){
-    AP.require('room', function(room){
-      room.getParticipants(function(err, data){
-        if (!err) {
-          $('#details-title').html('Room participants');
-          $('#details').html(JSON.stringify(data, null, 2));
-        }
-      });
-    });
-  });
-
-  $('#user').on('click', function(){
-    AP.require('user', function(user){
-      user.getCurrentUser(function(err, data){
-        if (!err) {
-          $('#details-title').html('User details');
-          $('#details').html(JSON.stringify(data, null, 2));
+        deploy_url = '/deploy/' + skel + '/' + env;
+    AP.require('dialog', function(dialog) {
+      dialog.open({
+        key: "hipchat-deploybot-addon.deploy-dialog",
+        options: {
+          title: skel + " Deployment Options"
+        },
+        parameters: {
+          skel: skel,
+          env: env,
+          deploy_url: deploy_url
         }
       });
     });
