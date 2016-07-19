@@ -10,7 +10,6 @@
 // Once parameters are received, primary action is enabled
 AP.register({
   "receive-parameters": function(parameters) {
-    console.log(parameters);
     $('#deploy-form').attr("action", parameters.deploy_url);
     $('#info-callout').html("You are deploying"
       + " " + parameters.skel + " to " + parameters.env
