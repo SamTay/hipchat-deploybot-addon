@@ -134,8 +134,8 @@ module.exports = function (app, addon) {
   app.post('/deploy/:skel/:env',
     addon.authenticate(),
     function(req, res) {
-      var skel = req.param('skel'),
-          env = req.param('env'),
+      var skel = req.params.skel,
+          env = req.params.env,
           options = req.query;
       handleDeployment(skel, env, options, req.identity.roomId, req, res);
     }
