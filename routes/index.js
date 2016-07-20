@@ -75,7 +75,14 @@ module.exports = function (app, addon) {
           res.json({
             "label": {
               "type": "html",
-              "value": "<b>" + skelCount + "</b> Skels"
+              "value": "<b>Deploybot</b>"
+            },
+            "status": {
+              "type": "lozenge",
+              "value": {
+                "label": skelCount + " skels",
+                "type": "success"
+              }
             }
           });
         }
