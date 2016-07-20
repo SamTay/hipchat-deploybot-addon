@@ -136,8 +136,10 @@ module.exports = function (app, addon) {
     function(req, res) {
       var skel = req.params.skel,
           env = req.params.env,
-          options = req.query;
-      handleDeployment(skel, env, options, req.identity.roomId, req, res);
+          options = req.query,
+          roomId = req.identity.roomId,
+          userName = req.body.user;
+      handleDeployment(skel, env, options, roomId, userName, req, res);
     }
   );
 
@@ -224,10 +226,19 @@ module.exports = function (app, addon) {
   app.post('/start-from-message',
     addon.authenticate(),
     function(req, res) {
-      var skel, env, options = {};
-      var message = req.body.item.message.message;
-      var pattern = /start\s+([\w\-]+)\s+([\w\-]+)\s*(.*)/i; // TODO check current hubot pattern
-      var match = message.match(pattern);
+      var skel, env, userName, options = {};
+      var message = req.body.item.message.message,
+          roomId = req.context.item.room.id,
+          pattern = /start\s+([\w\-]+)\s+([\w\-]+)\s*(.*)/i,
+          match = message.match(pattern);
+      // from is object in message event data
+      if (_.isObject(req.body.item.message.from)) {
+        helper.debug('message.from:', req.body.item.message.from);
+        userName = req.body.item.message.from.name;
+      // from is string in notification event data
+      } else if (_.isString(req.body.item.message.from)) {
+        userName = req.body.item.message.from;
+      }
       if (match) {
         skel = match[1];
         env = match[2];
@@ -236,7 +247,7 @@ module.exports = function (app, addon) {
           helper.debug('deployment options: ', options);
         }
         helper.debug(util.format('Deploying %s to %s from webhook message', skel, env));
-        handleDeployment(skel, env, options, req.context.item.room.id, req, res);
+        handleDeployment(skel, env, options, roomId, userName, req, res);
       } else {
         var errorMsg = "I didn't understand that.<br>"
           + "The start deployment syntax is '/deploybot start CLIENT ENV [options]'<br>"
@@ -247,7 +258,7 @@ module.exports = function (app, addon) {
     }
   );
 
-  function handleDeployment(skel, env, options, roomId, req, res) {
+  function handleDeployment(skel, env, options, roomId, userName, req, res) {
     deploybot.startDeployment(skel, env, options, function(err, data) {
       var card, opts, msg, url, color;
       if (err) {
@@ -260,7 +271,7 @@ module.exports = function (app, addon) {
         url = util.format('%s/log/%s', deploybot.getBaseUrl(), data.deployment_id.slice(0, 8));
         card = {
           title: util.format('%s -- %s Deployment', skel, env),
-          description: data.message || 'Click the link to see the deployment status.',
+          description: data.message || '%s started deploying to %s on %s -- check the status by visiting the link.',
           style: 'link',
           url: url,
           id: uuid.v4(),
@@ -268,6 +279,7 @@ module.exports = function (app, addon) {
             url: "https://technologyconversations.files.wordpress.com/2015/12/docker-jenkins.png?w=300&h=214"
           }
         };
+        card.description = util.format(card.description, userName, env, skel);
         msg = util.format('<a href="%s"><b>%s</b></a>: %s', url, card.title, card.description);
       }
       opts = {'options': {'color': color}};

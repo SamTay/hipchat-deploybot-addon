@@ -8,8 +8,10 @@
 <script>
 // This function will receive the parameters that were used in dialog.open(...)
 // Once parameters are received, primary action is enabled
+var user = null;
 AP.register({
   "receive-parameters": function(parameters) {
+    user = parameters.user;
     $('#deploy-form').attr("action", parameters.deploy_url);
     $('#info-callout').html("You are deploying to the<br>"
       + "<span class='env-name'>" + parameters.env + "</span> environment of <span class='skel-name'>" + parameters.skel + "</span>"
@@ -32,6 +34,7 @@ AP.register({
       $.ajax({
         type: 'POST',
         url: url,
+        data: {user: user},
         headers: { 'Authorization': 'JWT {{signed_request}}' }
       }).done(function() {
         closeDialog(true);
