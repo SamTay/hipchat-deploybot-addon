@@ -66,12 +66,12 @@ module.exports = function (app, addon) {
           res.json({
             "label": {
               "type": "html",
-              "value": "<b>No Connection</b>"
+              "value": "<b>Deploybot</b>"
             },
             "status": {
               "type": "lozenge",
               "value": {
-                "label": "Broken",
+                "label": ":cry:",
                 "type": "error"
               }
             }
@@ -196,14 +196,14 @@ module.exports = function (app, addon) {
   // Notify the room that the add-on was installed. To learn more about
   // Connect's install flow, check out:
   // https://developer.atlassian.com/hipchat/guide/installation-flow
-  addon.on('installed', function(clientKey, clientInfo, req){
+  addon.on('installed', function (clientKey, clientInfo, req) {
     hipchat.sendMessage(clientInfo, req.body.roomId, 'The ' + addon.descriptor.name + ' add-on has been installed in this room');
   });
 
   // Clean up clients when uninstalled
-  addon.on('uninstalled', function(id){
-    addon.settings.client.keys(id+':*', function(err, rep){
-      rep.forEach(function(k){
+  addon.on('uninstalled', function (id) {
+    addon.settings.client.keys(id + ':*', function (err, rep) {
+      rep.forEach(function (k) {
         addon.logger.info('Removing key:', k);
         addon.settings.client.del(k);
       });
