@@ -1,3 +1,23 @@
+/* Styles for the sidebar to support the single page content approach. */
+.content-target {
+  display: none;
+  position: absolute;
+  top: 0;
+}
+.aui-connect-content,
+:target ~ .aui-connect-content,
+:target ~ .aui-connect-content:last-child {
+  display: none;
+}
+:target + .aui-connect-content,
+:target + .aui-connect-content:last-child {
+  display: block;
+}
+.aui-connect-content:last-child {
+  display: block;
+}
+
+
 @font-face {
   font-family: Etica;
   src: url(../LFT_Etica_Bold.otf); }
@@ -17,7 +37,6 @@
   height: 100px; }
 
 body {
-  height: 100%;
   background-color: #0077c6; }
 
 h3 {
