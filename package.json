@@ -6,23 +6,23 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "ace-abotars": "^0.1.6",
-    "atlassian-connect-express": "^1.0.7",
+    "ace-abotars": "^0.1.7",
+    "atlassian-connect-express": "^1.0.12",
     "atlassian-connect-express-hipchat": "^0.2.5",
-    "atlassian-connect-express-redis": "^0.1.5",
-    "body-parser": "^1.14.2",
-    "compression": "^1.6.0",
-    "cookie-parser": "^1.4.0",
+    "atlassian-connect-express-redis": "^0.1.7",
+    "body-parser": "^1.15.2",
+    "compression": "^1.6.2",
+    "cookie-parser": "^1.4.3",
     "cors": "^2.7.1",
-    "errorhandler": "^1.4.2",
-    "express": "^4.13.3",
+    "errorhandler": "^1.4.3",
+    "express": "^4.14.0",
     "express-hbs": "^0.8.4",
     "lodash": "^3.10.1",
-    "morgan": "^1.6.1",
-    "request": "^2.67.0",
-    "rsvp": "^3.1.0",
-    "static-expiry": "^0.0.11",
-    "uuid": "^2.0.1",
-    "qs": "^6.1.0"
+    "morgan": "^1.7.0",
+    "qs": "^6.2.1",
+    "request": "^2.74.0",
+    "rsvp": "^3.2.1",
+    "static-expiry": "0.0.11",
+    "uuid": "^2.0.2"
   }
 }
