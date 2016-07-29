@@ -15,7 +15,11 @@
             "scopes": [
                 "send_notification",
                 "view_room"
-            ]
+            ],
+            "avatar": {
+              "url": "{{localBaseUrl}}/img/logo.png",
+              "url@2x": "{{localBaseUrl}}/img/logo.png"
+            }
         },
         "installable": {
             "callbackUrl": "{{localBaseUrl}}/installable"
@@ -63,8 +67,7 @@
                "icon": {
                    "url": "{{localBaseUrl}}/img/logo.png",
                    "url@2x": "{{localBaseUrl}}/img/logo.png"
-               },
-               "weight": 0
+               }
             }
         ],
         "webPanel": [
