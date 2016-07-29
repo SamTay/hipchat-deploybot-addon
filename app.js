@@ -6,7 +6,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var compression = require('compression');
-var cookieParser = require('cookie-parser');
 var errorHandler = require('errorhandler');
 var morgan = require('morgan');
 // You need to load `atlassian-connect-express` to use her godly powers
@@ -57,7 +56,6 @@ app.use(morgan(devEnv ? 'dev' : 'combined'));
 // Include request parsers
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(cookieParser());
 // Gzip responses when appropriate
 app.use(compression());
 // Enable the ACE global middleware (populates res.locals with add-on related stuff)
@@ -74,7 +72,6 @@ if (devEnv) app.use(errorHandler());
 
 // Wire up your routes using the express and `atlassian-connect-express` objects
 routes(app, addon);
-require('ace-abotars')(addon, app);
 
 // Boot the damn thing
 http.createServer(app).listen(port, function(){

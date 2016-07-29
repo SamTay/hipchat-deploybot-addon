@@ -23,7 +23,12 @@ module.exports = function (app, addon) {
       res.format({
         // If the request content-type is text-html, it will decide which to serve up
         'text/html': function () {
-          res.redirect(addon.descriptor.links.homepage);
+          var homepage = url.parse(addon.descriptor.links.homepage);
+          if (homepage.hostname === req.hostname && homepage.path === req.path) {
+            res.render('homepage', addon.descriptor);
+          } else {
+            res.redirect(addon.descriptor.links.homepage);
+          }
         },
         // This logic is here to make sure that the `addon.json` is always
         // served up when requested by the host
@@ -155,9 +160,7 @@ module.exports = function (app, addon) {
   );
 
   // Sample endpoint to send a card notification back into the chat room
-  // https://www.hipchat.com/docs/apiv2/method/send_room_notification.
-  // For more information on Cards, take a look at:
-  // https://developer.atlassian.com/hipchat/guide/hipchat-ui-extensions/cards
+  // See https://developer.atlassian.com/hipchat/guide/sending-messages
   app.post('/send_notification',
     addon.authenticate(),
     function (req, res) {
@@ -165,18 +168,18 @@ module.exports = function (app, addon) {
         "style": "link",
         "url": "https://www.hipchat.com",
         "id": uuid.v4(),
-        "title": "El HipChat!",
+        "title": req.body.messageTitle,
         "description": "Great teams use HipChat: Group and private chat, file sharing, and integrations",
         "icon": {
           "url": "https://hipchat-public-m5.atlassian.com/assets/img/hipchat/bookmark-icons/favicon-192x192.png"
         }
       };
       var msg = '<b>' + card.title + '</b>: ' + card.description;
-      var opts = {'options': {'color': 'yellow'}};
+      var opts = { 'options': { 'color': 'yellow' } };
       hipchat.sendMessage(req.clientInfo, req.identity.roomId, msg, opts, card);
-      res.json({status: "ok"});
+      res.json({ status: "ok" });
     }
-  );
+    );
 
   // This is an example route to handle an incoming webhook
   // https://developer.atlassian.com/hipchat/guide/webhooks
