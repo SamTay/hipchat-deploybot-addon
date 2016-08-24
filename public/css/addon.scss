@@ -132,6 +132,10 @@ img.logo {
 
 .skel-details {
   padding: 10px 0 5px 20px;
+
+  &.hidden {
+    display: none;
+  }
 }
 .skel-details .environment-wrapper {
   margin-bottom: 10px;
