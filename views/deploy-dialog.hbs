@@ -24,6 +24,12 @@ AP.register({
     });
   },
   "dialog-button-click": function(event, closeDialog) {
+    // Disable primary action when starting deployment
+    AP.require("dialog", function(dialog) {
+      dialog.updatePrimaryAction({
+        enabled: false
+      });
+    });
     // Handle deploy
     if (event.action === "hipchat-deploybot-addon.start") {
       var url = $("#deploy-form").attr("action");
