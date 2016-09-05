@@ -38,19 +38,13 @@
             "name": "Reincarnation Message"
           },
           {
-            "url": "{{localBaseUrl}}/start-from-message",
-            "pattern": "^/deploybot start",
-            "event": "room_message",
-            "name": "Start Deployment Message"
-          },
-          {
             "url": "{{localBaseUrl}}/kill",
             "pattern": "^/deploybot reincarnate",
             "event": "room_notification",
             "name": "Reincarnation Notification"
           },
           {
-            "url": "{{localBaseUrl}}/start-from-message",
+            "url": "{{localBaseUrl}}/start-from-notification",
             "pattern": "^/deploybot start",
             "event": "room_notification",
             "name": "Start Deployment Notification"

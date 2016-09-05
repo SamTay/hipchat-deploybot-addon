@@ -179,7 +179,7 @@ module.exports = function (app, addon) {
       hipchat.sendMessage(req.clientInfo, req.identity.roomId, msg, opts, card);
       res.json({ status: "ok" });
     }
-    );
+  );
 
   // This is an example route to handle an incoming webhook
   // https://developer.atlassian.com/hipchat/guide/webhooks
@@ -223,25 +223,18 @@ module.exports = function (app, addon) {
     }
   );
 
-  // Start deployment from message
+  // Start deployment from notification
   // Used for octohook autodeployments
   // Example: /deploybot start RDS qa-1 ref=develop otherOption=otherValue
-  app.post('/start-from-message',
+  app.post('/start-from-notification',
     addon.authenticate(),
     function(req, res) {
       var skel, env, userName, options = {};
       var message = req.body.item.message.message,
+          userName = req.body.item.message.from,
           roomId = req.context.item.room.id,
           pattern = /start\s+([\w\-]+)\s+([\w\-]+)\s*(.*)/i,
           match = message.match(pattern);
-      // from is object in message event data
-      if (_.isObject(req.body.item.message.from)) {
-        helper.debug('message.from:', req.body.item.message.from);
-        userName = req.body.item.message.from.name;
-      // from is string in notification event data
-      } else if (_.isString(req.body.item.message.from)) {
-        userName = req.body.item.message.from;
-      }
       if (match) {
         skel = match[1];
         env = match[2];
@@ -249,7 +242,7 @@ module.exports = function (app, addon) {
           options = qs.parse(match[3], {plainObjects:true, delimiter: /\s+/});
           helper.debug('deployment options: ', options);
         }
-        helper.debug(util.format('Deploying %s to %s from webhook message', skel, env));
+        helper.debug(util.format('Deploying %s to %s from webhook notification', skel, env));
         handleDeployment(skel, env, options, roomId, userName, req, res);
       } else {
         var errorMsg = "I didn't understand that.<br>"
